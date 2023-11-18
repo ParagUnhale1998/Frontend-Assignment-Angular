@@ -177,6 +177,9 @@ export class AppComponent {
   resetSelection(): void {
     this.usersForPage.forEach(user => user.selected = false);
   }
+  selectUser(user: any) {
+    return user.selected = !user.selected;
+  }
 
   NavigateToTeams(){
     console.log('teams')

@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow mb-3">
     <div class="container-fluid ">
-      <a class="navbar-brand" href="#">User Management</a>
+      <a class="navbar-brand logo-text" href="/">Team Builder</a>
+      <img class="img-fluid logo" src="assets/logo1.png" alt="">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -10,7 +11,7 @@
            
           <li class="nav-item me-2 col-lg-6 col-12">
             <form class="d-flex gap-2">
-              <input class="form-control " type="search" placeholder="Search Names..." aria-label="Search" #searchTerm (input)="onSearch(searchTerm.value)">
+              <input  id="searchInput"  name="searchInput" class="form-control" type="search" placeholder="Search Names..." aria-label="Search" #searchTerm (input)="onSearch(searchTerm.value)">
               <button class="btn btn-primary" (click)="onSearch(searchTerm.value)" [disabled]="!searchTerm.value.trim()">Search</button>
             </form>
           </li>
@@ -55,7 +56,7 @@
   
   
 <div class="container-fluid d-flex align-items-start justify-content-around flex-wrap gap-4 p-2 pb-6">
-    <div class="card shadow" style="width: 18rem;" *ngFor="let user of usersForPage">
+    <div class="card shadow" style="width: 18rem;" *ngFor="let user of usersForPage" (click)="selectUser(user)">
         <img [defaultImage]="user.avatar" [lazyLoad]="getUserAvatarUrl(user.avatar)" class="card-img-top img-thumbnail"
             alt="{{ user.first_name }} {{ user.last_name }}">
         <div class="card-body">
@@ -74,10 +75,10 @@
            
             <!-- <input class="form-check-input shadow checkbox" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available"> -->
             <div class="form-check d-flex gap-2 justify-content-between align-items-center bg-light" *ngIf="user.available">
-                <label class="form-check-label" for="flexCheckDefault">
+                <label class="form-check-label" [for]="'teamMemberCheckbox_' + user.id">
                     Add Member To Team
                 </label>
-                <input class="form-check-input shadow checkbox m-0 p-0" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available">
+                <input [id]="'teamMemberCheckbox_' + user.id" class="form-check-input shadow checkbox m-0 p-0" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available">
             </div>
         </div>
     </div>
