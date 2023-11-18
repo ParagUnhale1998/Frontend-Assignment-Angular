@@ -1,0 +1,37 @@
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Names</th>
+                <th>Domains</th>
+                <th>Emails</th>
+            </tr>
+        </thead>
+        <tbody>
+   
+                <p *ngIf="teams.length <= 0" class="text-center text-capitalize">No teams available.</p>
+
+            <tr *ngFor="let team of teams">
+                <td>{{ team.name }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let member of team.members">{{ member.first_name }} {{ member.last_name }}</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li *ngFor="let member of team.members">{{ member.domain || 'N/A' }}</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li *ngFor="let member of team.members">{{ member.email }}</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
