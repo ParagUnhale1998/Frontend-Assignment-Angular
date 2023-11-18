@@ -6,10 +6,6 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { FormsModule } from '@angular/forms';
-import { LazyLoadImageModule } from 'ng-lazyload-image';
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -21,10 +17,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NgbModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatPaginatorModule,
-    FormsModule,
-    LazyLoadImageModule,
-    ModalModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

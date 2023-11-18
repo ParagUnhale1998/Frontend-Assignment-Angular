@@ -1,0 +1,131 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow mb-3">
+    <div class="container-fluid d-flex justify-content-between">
+      <a class="navbar-brand logo-text" href="/">Team Builder</a>
+      <img class="img-fluid logo" src="assets/logo1.png" alt="">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
+        <ul class="navbar-nav mt-2 me-auto mb-2  d-flex justify-content-between gap-2 align-items-center w-100">
+           
+          <li class="nav-item me-2 col-lg-6 col-12">
+            <form class="d-flex gap-2">
+              <input  id="searchInput"  name="searchInput" class="form-control" type="search" placeholder="Search Names..." aria-label="Search" #searchTerm (input)="onSearch(searchTerm.value)">
+              <button class="btn btn-primary" (click)="onSearch(searchTerm.value)" [disabled]="!searchTerm.value.trim()">Search</button>
+            </form>
+          </li>
+          
+          <li class="nav-item">
+            <button class="btn btn-primary" (click)="open()">All Teams {{this.teamData}}</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- <router-outlet></router-outlet> -->
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-4">
+        <label for="domainFilter" class="form-label">Domain:</label>
+        <select class="form-select" id="domainFilter" [(ngModel)]="selectedDomain"  (change)="applyFilters()">
+          <option value="" selected>All</option>
+          <option *ngFor="let domain of uniqueDomains" [value]="domain">{{ domain }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="genderFilter" class="form-label">Gender:</label>
+        <select class="form-select" id="genderFilter" [(ngModel)]="selectedGender" (change)="applyFilters()">
+          <option value="" selected>All</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="availabilityFilter" class="form-label">Availability:</label>
+        <select class="form-select" id="availabilityFilter" [(ngModel)]="selectedAvailability" (change)="applyFilters()">
+          <option value="" selected>All</option>
+          <option value="true">Available</option>
+          <option value="false">Not Available</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  
+  
+<div class="container-fluid d-flex align-items-start justify-content-around flex-wrap gap-4 p-2 pb-6">
+    <div class="card shadow" style="width: 18rem;" *ngFor="let user of usersForPage" (click)="selectUser(user)">
+        <img [defaultImage]="user.avatar" [lazyLoad]="getUserAvatarUrl(user.avatar)" class="card-img-top img-thumbnail"
+            alt="{{ user.first_name }} {{ user.last_name }}">
+        <div class="card-body">
+            <div class="card-title d-flex gap-4 justify-content-between">
+                <h5>{{ user.first_name }} {{ user.last_name }}</h5>   
+                <!-- <input class="checkbox" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available"> -->
+            </div>
+
+            <p class="card-text">
+                <strong>Email:</strong> {{ user.email }}<br>
+                <strong>Gender:</strong> {{ user.gender }}<br>
+                <strong>Domain:</strong> {{ user.domain }}<br>
+                <strong>Availability:</strong> {{ user.available ? 'Available' : 'Not Available' }}
+            </p>
+            <!-- <button class="btn btn-secondary" (click)="createTeam(user)">Create Team</button> -->
+           
+            <!-- <input class="form-check-input shadow checkbox" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available"> -->
+            <div class="form-check d-flex gap-2 justify-content-between align-items-center bg-light" *ngIf="user.available">
+                <label class="form-check-label" [for]="'teamMemberCheckbox_' + user.id">
+                    Add Member To Team
+                </label>
+                <input [id]="'teamMemberCheckbox_' + user.id" class="form-check-input shadow checkbox m-0 p-0" type="checkbox" [(ngModel)]="user.selected" [disabled]="!user.available">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pagination">
+    <button class="btn btn-success" (click)="createTeam(getSelectedUsers())">Create Team</button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle bg-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          [ 10 - 50 ]
+        </button>
+        <ul class="dropdown-menu ">
+          <li><a class="dropdown-item" (click)="onPageChange(10)">10</a></li>
+          <li><a class="dropdown-item" (click)="onPageChange(20)">20</a></li>
+          <li><a class="dropdown-item" (click)="onPageChange(30)">30</a></li>
+          <li><a class="dropdown-item" (click)="onPageChange(40)">40</a></li>
+          <li><a class="dropdown-item" (click)="onPageChange(50)">50</a></li>
+        </ul>
+      </div>
+    <button class="btn btn-primary" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>{{ currentPage }}</span>
+    <button class="btn btn-primary" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+
+  <div class="space"></div>
+
+  <div class="alert alert-warning" role="alert" *ngIf="warning">
+    Select the Users To Create A Team!
+  </div>
+
+  <div class="container-fluid text-center alert alert-primary information" *ngIf="ShowInformation">
+      <div class="container-fluid infoText text-cente">
+        <h2>Team Builder App Instructions</h2>
+        <p>
+          Welcome to the Team Builder app! Below are the functionalities and features that make this app stand out:
+        </p>
+        <ul class="list-unstyled">
+          <li>Display all users in a visually appealing card format with pagination (20 users/page).</li>
+          <li>Optimized performance with lazy loading for all user images.</li>
+          <li>Effortlessly search for users by their names using the provided search bar.</li>
+          <li>Apply filters for Domain, Gender, and Availability simultaneously for a refined user experience.</li>
+          <li>Create teams by selecting users from unique domains, ensuring only available users are considered.</li>
+          <li>Implement a smart team creation process, preventing users of the same domain from being added to the team.</li>
+          <li>Show detailed information about the created team on the "All Teams" page.</li>
+        </ul>
+      </div>
+    <button class="btn btn-success mt-3 btn-lg" (click)="ShowInformation = false">Close</button>
+  </div>
+  
+  
