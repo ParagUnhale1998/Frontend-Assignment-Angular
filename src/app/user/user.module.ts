@@ -8,6 +8,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -21,7 +23,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatPaginatorModule,
     FormsModule,
     LazyLoadImageModule,
-    ModalModule
-  ]
+    ModalModule,
+    ReactiveFormsModule
+  ],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+
 })
 export class UserModule { }

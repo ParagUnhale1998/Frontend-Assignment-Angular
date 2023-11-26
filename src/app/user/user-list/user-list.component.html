@@ -11,7 +11,7 @@
            
           <li class="nav-item me-2 col-lg-6 col-12">
             <form class="d-flex gap-2">
-              <input  id="searchInput"  name="searchInput" class="form-control" type="search" placeholder="Search Names..." aria-label="Search" #searchTerm (input)="onSearch(searchTerm.value)">
+              <input  id="searchInput"  name="searchInput" class="form-control" type="search" placeholder="Search Names..." aria-label="Search" #searchTerm (input)="handleSearchInputChange($event)">
               <button class="btn btn-primary" (click)="onSearch(searchTerm.value)" [disabled]="!searchTerm.value.trim()">Search</button>
             </form>
           </li>

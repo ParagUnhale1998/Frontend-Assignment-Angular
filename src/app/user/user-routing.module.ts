@@ -7,10 +7,12 @@ const routes: Routes = [
   { path: 'list', component: UserListComponent },
   { path: 'team', component: TeamComponent },
   { path: '', redirectTo: 'list', pathMatch: 'full' },
+  // { path: '', component: UserListComponent },
+  // { path: '**', component: UserListComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes,)],
   exports: [RouterModule]
 })
 export class UserRoutingModule { }
